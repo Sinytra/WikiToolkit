@@ -1,10 +1,18 @@
 plugins {
     java
     `java-gradle-plugin`
+    `maven-publish`
+    id("net.neoforged.gradleutils") version "3.0.0"
 }
 
-group = "org.sinytra"
+group = "org.sinytra.wiki"
 version = "1.0-SNAPSHOT"
+
+gradleutils.version {
+    branches.suffixBranch()
+}
+project.version = gradleutils.version
+logger.lifecycle("Wiki Toolkit version ${gradleutils.version}")
 
 repositories {
     mavenCentral()
@@ -29,8 +37,22 @@ tasks.test {
 gradlePlugin {
     plugins {
         create("wikiToolkitPlugin") {
-            id = "org.sinytra.wiki-toolkit"
-            implementationClass = "org.sinytra.toolkit.WikiToolkitPlugin"
+            id = "org.sinytra.wiki.toolkit"
+            implementationClass = "org.sinytra.wiki.toolkit.WikiToolkitPlugin"
+        }
+    }
+}
+
+publishing {
+    repositories {
+        if (System.getenv("MAVEN_URL") != null) {
+            maven {
+                url = uri(System.getenv("MAVEN_URL"))
+                credentials {
+                    username = System.getenv("MAVEN_USERNAME") ?: "not"
+                    password = System.getenv("MAVEN_PASSWORD") ?: "set"
+                }
+            }
         }
     }
 }

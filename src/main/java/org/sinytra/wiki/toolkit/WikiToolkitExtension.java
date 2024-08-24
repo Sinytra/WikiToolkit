@@ -1,4 +1,4 @@
-package org.sinytra.toolkit;
+package org.sinytra.wiki.toolkit;
 
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.provider.ListProperty;

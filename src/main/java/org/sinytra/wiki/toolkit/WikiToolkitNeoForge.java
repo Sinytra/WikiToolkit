@@ -1,4 +1,4 @@
-package org.sinytra.toolkit;
+package org.sinytra.wiki.toolkit;
 
 import net.neoforged.moddevgradle.dsl.NeoForgeExtension;
 import net.neoforged.moddevgradle.dsl.RunModel;
@@ -11,12 +11,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import static org.sinytra.wiki.toolkit.MavenUtil.ITEM_ASSET_EXPORTER_GROUP;
+import static org.sinytra.wiki.toolkit.WikiToolkitPlugin.OUTPUT_PROPERTY;
+import static org.sinytra.wiki.toolkit.WikiToolkitPlugin.RENDER_PROPERTY;
+
 public class WikiToolkitNeoForge {
     public static final String MOD_DEV_GRADLE_ID = "net.neoforged.moddev";
-    public static final String ITEM_ASSET_EXPORTER_GROUP = "org.sinytra";
     public static final String ITEM_ASSET_EXPORTER_NAME = "item-asset-export-neoforge";
-    public static final String RENDER_PROPERTY = "item_asset_export.render.namespaces";
-    public static final String OUTPUT_PROPERTY = "item_asset_export.render.output";
 
     public static void apply(Project project) {
         NeoForgeExtension neoExtension = project.getExtensions().getByType(NeoForgeExtension.class);
@@ -60,7 +61,7 @@ public class WikiToolkitNeoForge {
 
         try {
             String mcVersion = getMinecraftVersion(project);
-            List<String> versions = MavenUtil.getAvailableModVersions();
+            List<String> versions = MavenUtil.getAvailableModVersions(ITEM_ASSET_EXPORTER_NAME);
             List<String> availableVersions = versions.stream()
                 .filter(s -> s.split("\\+")[1].equals(mcVersion))
                 .sorted()

@@ -1,4 +1,4 @@
-package org.sinytra.toolkit;
+package org.sinytra.wiki.toolkit;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -13,10 +13,9 @@ import java.util.List;
 public final class MavenUtil {
     public static final String MAVEN_URL = "https://maven.su5ed.dev/releases/";
     public static final String ITEM_ASSET_EXPORTER_GROUP = "org.sinytra";
-    public static final String ITEM_ASSET_EXPORTER_NAME = "item-asset-export-neoforge";
 
-    public static List<String> getAvailableModVersions() throws Throwable {
-        String url = MAVEN_URL + ITEM_ASSET_EXPORTER_GROUP.replace('.', '/') + "/" + ITEM_ASSET_EXPORTER_NAME + "/maven-metadata.xml";
+    public static List<String> getAvailableModVersions(String name) throws Throwable {
+        String url = MAVEN_URL + ITEM_ASSET_EXPORTER_GROUP.replace('.', '/') + "/" + name + "/maven-metadata.xml";
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
