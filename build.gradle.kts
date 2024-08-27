@@ -26,6 +26,9 @@ repositories {
 dependencies {
     implementation("net.neoforged:moddev-gradle:2.0.16-beta")
 
+    implementation(group = "org.eclipse.jgit", name = "org.eclipse.jgit", version = "6.8.0.202311291450-r")
+    implementation(group = "org.zeroturnaround", name = "zt-exec", version = "1.12")
+
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }

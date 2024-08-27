@@ -10,4 +10,6 @@ public abstract class WikiToolkitExtension {
     public abstract ListProperty<String> getExportedAssetNamespaces();
 
     public abstract RegularFileProperty getDocumentationRoot(); 
+
+    public abstract Property<String> getWikiRepositoryUrl();
 }
