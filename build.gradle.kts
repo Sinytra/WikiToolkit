@@ -6,7 +6,6 @@ plugins {
 }
 
 group = "org.sinytra.wiki"
-version = "1.0-SNAPSHOT"
 
 gradleutils.version {
     branches.suffixBranch()

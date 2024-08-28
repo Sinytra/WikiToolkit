@@ -23,16 +23,25 @@ public class WikiToolkitNeoForge {
         NeoForgeExtension neoExtension = project.getExtensions().getByType(NeoForgeExtension.class);
         WikiToolkitExtension extension = project.getExtensions().getByType(WikiToolkitExtension.class);
 
-        if (extension.getExportedAssetNamespaces().isPresent()) {
-            NamedDomainObjectProvider<RunModel> model = neoExtension.getRuns().register("assetExportClient", run -> {
-                run.client();
-                RunModel clientRun = neoExtension.getRuns().findByName("client");
-                if (clientRun != null) {
-                    run.getGameDirectory().set(clientRun.getGameDirectory());
-                }
-            });
+        NamedDomainObjectProvider<RunModel> model = neoExtension.getRuns().register("assetExportClient", run -> {
+            run.client();
+            RunModel clientRun = neoExtension.getRuns().findByName("client");
+            if (clientRun != null) {
+                run.getGameDirectory().set(clientRun.getGameDirectory());
+            }
+        });
 
-            project.afterEvaluate(p -> {
+        project.afterEvaluate(p -> {
+            if (extension.getDocumentationRoot().isPresent() && extension.getExportedAssetNamespaces().isPresent()) {
+                p.getRepositories().maven(repo -> {
+                   repo.setName("Sinytra");
+                   repo.setUrl(MavenUtil.MAVEN_URL);
+                   repo.content(r -> {
+                       r.includeGroup("org.sinytra");
+                       r.includeGroup("org.sinytra.wiki");
+                   });
+                });
+
                 String exporterVersion = getItemAssetExporterVersion(p);
                 project.getLogger().info("Found asset exporter version {}", exporterVersion);
                 if (exporterVersion != null) {
@@ -49,8 +58,8 @@ public class WikiToolkitNeoForge {
                         run.systemProperty(OUTPUT_PROPERTY, path.toAbsolutePath().toString());
                     });
                 }
-            });
-        }
+            }
+        });
     }
 
     private static String getItemAssetExporterVersion(Project project) {
