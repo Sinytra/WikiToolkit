@@ -20,10 +20,15 @@ repositories {
         name = "NeoForge"
         url = uri("https://maven.neoforged.net/releases")
     }
+    maven {
+        name = "FabricMC"
+        url = uri("https://maven.fabricmc.net")
+    }
 }
 
 dependencies {
-    implementation("net.neoforged:moddev-gradle:2.0.16-beta")
+    compileOnly("net.neoforged:moddev-gradle:2.0.16-beta")
+    compileOnly("net.fabricmc:fabric-loom:1.7-SNAPSHOT")
 
     implementation(group = "org.eclipse.jgit", name = "org.eclipse.jgit", version = "6.8.0.202311291450-r")
     implementation(group = "org.zeroturnaround", name = "zt-exec", version = "1.12")
