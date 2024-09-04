@@ -12,18 +12,26 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 
 public abstract class RevalidateDocsTask extends DefaultTask {
+    public static final String API_PATH = "api/docs/%s/invalidate";
+
     @Input
     public abstract Property<URI> getTargetURI();
 
+    @Input
+    public abstract Property<String> getProjectId();
+    
     @Input
     public abstract Property<String> getAccessToken();
 
     @TaskAction
     public void run() {
-        URI uri = getTargetURI().get();
+        URI base = getTargetURI().get();
+        String projectId = getProjectId().get();
+        URI uri = base.resolve(API_PATH.formatted(projectId));
         HttpRequest.Builder builder = HttpRequest.newBuilder(uri)
-            .POST(HttpRequest.BodyPublishers.noBody())
-            .timeout(Duration.ofSeconds(5));
+            .version(HttpClient.Version.HTTP_1_1)
+            .timeout(Duration.ofSeconds(5))
+            .POST(HttpRequest.BodyPublishers.noBody());
         if (getAccessToken().isPresent()) {
             builder.header("Authorization", getAccessToken().get());
         }

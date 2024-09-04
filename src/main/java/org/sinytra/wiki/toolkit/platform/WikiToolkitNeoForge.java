@@ -4,30 +4,28 @@ import net.neoforged.moddevgradle.dsl.NeoForgeExtension;
 import net.neoforged.moddevgradle.dsl.RunModel;
 import org.gradle.api.NamedDomainObjectProvider;
 import org.gradle.api.Project;
+import org.gradle.api.provider.Provider;
 
 import static org.sinytra.wiki.toolkit.WikiToolkitPlugin.OUTPUT_PROPERTY;
 import static org.sinytra.wiki.toolkit.WikiToolkitPlugin.RENDER_PROPERTY;
 
-public class WikiToolkitNeoForge extends PlatformCommon<NamedDomainObjectProvider<RunModel>> {
-
+public class WikiToolkitNeoForge extends PlatformCommon {
     @Override
-    protected void configureModel(NamedDomainObjectProvider<RunModel> model, String namespaces, String output) {
-        model.configure(run -> {
-            run.systemProperty(RENDER_PROPERTY, namespaces);
-            run.systemProperty(OUTPUT_PROPERTY, output);
-        });
-    }
-
-    @Override
-    protected NamedDomainObjectProvider<RunModel> prepareRunConfig(Project project) {
+    protected void createRunModel(Project project, String name, Provider<String> namespaces, Provider<String> outputPath) {
         NeoForgeExtension neoExtension = project.getExtensions().getByType(NeoForgeExtension.class);
 
-        return neoExtension.getRuns().register("assetExportClient", run -> {
+        NamedDomainObjectProvider<RunModel> model = neoExtension.getRuns().register(name, run -> {
             run.client();
             RunModel clientRun = neoExtension.getRuns().findByName("client");
             if (clientRun != null) {
                 run.getGameDirectory().set(clientRun.getGameDirectory());
             }
+
         });
+
+        project.afterEvaluate(p -> model.configure(run -> {
+            run.systemProperty(RENDER_PROPERTY, namespaces.get());
+            run.systemProperty(OUTPUT_PROPERTY, outputPath.get());
+        }));
     }
 }

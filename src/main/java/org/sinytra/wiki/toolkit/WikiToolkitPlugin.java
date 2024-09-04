@@ -2,6 +2,7 @@ package org.sinytra.wiki.toolkit;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.TaskProvider;
 import org.sinytra.wiki.toolkit.platform.PlatformCommon;
@@ -57,17 +58,27 @@ public abstract class WikiToolkitPlugin implements Plugin<Project> {
             t.getExecService().convention(serviceProvider);
 
             t.getWorkingDir().set(workDir);
-            t.getLocalDocsDir().set(extension.getDocumentationRoot());
+            t.getDocumentationRoots().convention(extension.getDocs());
 
             t.dependsOn(installDepsTask);
         });
 
-        target.getTasks().register("revalidateDocs", RevalidateDocsTask.class, t -> {
-           t.setGroup("publishing");
-           t.setDescription("Revalidate wiki documentation to reflect new changes in source.");
+        Task revalidateDocsTask = target.getTasks().create("revalidateDocs", t -> {
+            t.setGroup("publishing");
+            t.setDescription("Revalidate wiki documentation for all projects to reflect new changes in source.");
+            t.getOutputs().upToDateWhen(o -> false);
+        });
 
-           t.getTargetURI().set(URI.create(DEFAULT_WIKI_URL));
-           t.getAccessToken().set(extension.getWikiAccessToken());
+        extension.getDocs().configureEach(root -> {
+            TaskProvider<RevalidateDocsTask> task = target.getTasks().register(WikiUtils.prefixTask(root, "revalidate", "docs"), RevalidateDocsTask.class, t -> {
+                t.setGroup("publishing");
+                t.setDescription("Revalidate wiki documentation for '%s' to reflect new changes in source.".formatted(root.getRoot()));
+
+                t.getTargetURI().set(URI.create(DEFAULT_WIKI_URL));
+                t.getAccessToken().set(extension.getWikiAccessToken());
+                t.getProjectId().set(root.getName());
+            });
+            revalidateDocsTask.dependsOn(task);
         });
     }
 }
