@@ -7,12 +7,10 @@ import org.gradle.api.tasks.TaskProvider;
 import org.sinytra.wiki.toolkit.platform.PlatformCommon;
 import org.sinytra.wiki.toolkit.platform.WikiToolkitFabricLoom;
 import org.sinytra.wiki.toolkit.platform.WikiToolkitNeoForge;
-import org.sinytra.wiki.toolkit.task.InstallDependenciesTask;
-import org.sinytra.wiki.toolkit.task.ProcessExecutorService;
-import org.sinytra.wiki.toolkit.task.RunLocalWikiInstanceTask;
-import org.sinytra.wiki.toolkit.task.SetupLocalWikiInstanceTask;
+import org.sinytra.wiki.toolkit.task.*;
 
 import java.io.File;
+import java.net.URI;
 
 @SuppressWarnings("unused")
 public abstract class WikiToolkitPlugin implements Plugin<Project> {
@@ -20,6 +18,7 @@ public abstract class WikiToolkitPlugin implements Plugin<Project> {
     public static final String OUTPUT_PROPERTY = "item_asset_export.render.output";
 
     public static final String REPO_URL = "https://github.com/Sinytra/Wiki";
+    public static final String DEFAULT_WIKI_URL = "https://wiki.sinytra.org"; // TODO Subject to change
 
     @Override
     public void apply(Project target) {
@@ -61,6 +60,14 @@ public abstract class WikiToolkitPlugin implements Plugin<Project> {
             t.getLocalDocsDir().set(extension.getDocumentationRoot());
 
             t.dependsOn(installDepsTask);
+        });
+
+        target.getTasks().register("revalidateDocs", RevalidateDocsTask.class, t -> {
+           t.setGroup("publishing");
+           t.setDescription("Revalidate wiki documentation to reflect new changes in source.");
+
+           t.getTargetURI().set(URI.create(DEFAULT_WIKI_URL));
+           t.getAccessToken().set(extension.getWikiAccessToken());
         });
     }
 }
