@@ -14,7 +14,9 @@ import org.slf4j.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class ExecuteCommandTask extends DefaultTask {
 
@@ -50,7 +52,9 @@ public abstract class ExecuteCommandTask extends DefaultTask {
         cmd.addAll(getCommand().get());
 
         ProcessExecutorService execService = getExecService().get();
-        Process process = execService.executeCommand(this, workDir, getEnvironment().get(), cmd, getSilentStdOut().get());
+        Map<String, String> env = new HashMap<>(getEnvironment().get());
+        modifyEnvironment(env);
+        Process process = execService.executeCommand(this, workDir, env, cmd, getSilentStdOut().get());
         process.waitFor();
 
         if (process.exitValue() != 0) {
@@ -59,4 +63,6 @@ public abstract class ExecuteCommandTask extends DefaultTask {
             logger.info("Command '{}' completed successfully", cmd);
         }
     }
+
+    protected void modifyEnvironment(Map<String, String> env) {}
 }
