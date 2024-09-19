@@ -37,7 +37,8 @@ public abstract class RevalidateDocsTask extends DefaultTask {
         }
         HttpRequest request = builder.build();
 
-        try(HttpClient client = HttpClient.newHttpClient()) {
+        try {
+            HttpClient client = HttpClient.newHttpClient();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() != 200) {

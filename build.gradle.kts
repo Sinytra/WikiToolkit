@@ -13,6 +13,8 @@ gradleutils.version {
 project.version = gradleutils.version
 logger.lifecycle("Wiki Toolkit version ${gradleutils.version}")
 
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+
 repositories {
     mavenCentral()
     gradlePluginPortal()
