@@ -19,7 +19,7 @@ public abstract class WikiToolkitPlugin implements Plugin<Project> {
     public static final String OUTPUT_PROPERTY = "item_asset_export.render.output";
 
     public static final String REPO_URL = "https://github.com/Sinytra/Wiki";
-    public static final String DEFAULT_WIKI_URL = "https://wiki.sinytra.org"; // TODO Subject to change
+    public static final String DEFAULT_WIKI_URL = "https://moddedmc.org";
 
     @Override
     public void apply(Project target) {
