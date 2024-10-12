@@ -1,6 +1,6 @@
 package org.sinytra.wiki.toolkit.task;
 
-import net.neoforged.moddevgradle.internal.utils.OperatingSystem;
+import org.gradle.internal.os.OperatingSystem;
 import org.gradle.api.provider.SetProperty;
 import org.gradle.api.tasks.Input;
 import org.gradle.work.DisableCachingByDefault;
