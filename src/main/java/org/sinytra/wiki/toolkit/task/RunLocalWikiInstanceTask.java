@@ -1,5 +1,6 @@
 package org.sinytra.wiki.toolkit.task;
 
+import net.neoforged.moddevgradle.internal.utils.OperatingSystem;
 import org.gradle.api.provider.SetProperty;
 import org.gradle.api.tasks.Input;
 import org.gradle.work.DisableCachingByDefault;
@@ -17,7 +18,11 @@ public abstract class RunLocalWikiInstanceTask extends ExecuteCommandTask {
     public abstract SetProperty<DocumentationRoot> getDocumentationRoots();
 
     public RunLocalWikiInstanceTask() {
-        getCommand().addAll("npm", "run", "dev");
+        if (OperatingSystem.current() != OperatingSystem.WINDOWS) {
+            getCommand().addAll("bash", "-c", "npm run dev");
+        } else {
+            getCommand().addAll("npm", "run", "dev");
+        }
         getEnvironment().put(LOCAL_PREVIEW_ENV, "true");
     }
 
