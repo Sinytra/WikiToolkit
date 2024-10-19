@@ -62,6 +62,12 @@ Running a local preview requires [NodeJS](https://nodejs.org/en/download/). Plea
 
 Once ready, it will be available at `http://localhost:3000`.
 
+### Known issues
+
+Using `org.gradle.daemon=false` will prevent the npm task from existing when gradle is stopped, keeping it running
+in the background. Please check your `gradle.properties` file and make sure this property is either set to `true` or
+removed entirely.
+
 ## Exporting assets
 
 > [!NOTE]  
