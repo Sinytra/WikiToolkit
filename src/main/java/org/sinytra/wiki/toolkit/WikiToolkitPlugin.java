@@ -7,7 +7,8 @@ import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.TaskProvider;
 import org.sinytra.wiki.toolkit.platform.PlatformCommon;
 import org.sinytra.wiki.toolkit.platform.WikiToolkitFabricLoom;
-import org.sinytra.wiki.toolkit.platform.WikiToolkitNeoForge;
+import org.sinytra.wiki.toolkit.platform.WikiToolkitModDevGradle;
+import org.sinytra.wiki.toolkit.platform.WikiToolkitNeoGradle;
 import org.sinytra.wiki.toolkit.task.*;
 
 import java.io.File;
@@ -32,7 +33,8 @@ public abstract class WikiToolkitPlugin implements Plugin<Project> {
         WikiToolkitExtension extension = target.getExtensions().create("wiki", WikiToolkitExtension.class);
 
         extension.getWikiRepositoryUrl().convention(REPO_URL);
-        target.getPluginManager().withPlugin(PlatformCommon.MOD_DEV_GRADLE_ID, p -> new WikiToolkitNeoForge().apply(target));
+        target.getPluginManager().withPlugin(PlatformCommon.MOD_DEV_GRADLE_ID, p -> new WikiToolkitModDevGradle().apply(target));
+        target.getPluginManager().withPlugin(PlatformCommon.NEO_GRADLE_ID, p -> new WikiToolkitNeoGradle().apply(target));
         target.getPluginManager().withPlugin(PlatformCommon.FABRIC_LOOM_GRADLE_ID, p -> new WikiToolkitFabricLoom().apply(target));
 
         Provider<ProcessExecutorService> serviceProvider = target.getGradle().getSharedServices().registerIfAbsent(ProcessExecutorService.NAME, ProcessExecutorService.class);

@@ -9,7 +9,7 @@ import org.gradle.api.provider.Provider;
 import static org.sinytra.wiki.toolkit.WikiToolkitPlugin.OUTPUT_PROPERTY;
 import static org.sinytra.wiki.toolkit.WikiToolkitPlugin.RENDER_PROPERTY;
 
-public class WikiToolkitNeoForge extends PlatformCommon {
+public class WikiToolkitModDevGradle extends PlatformCommon {
     @Override
     protected void createRunModel(Project project, String name, Provider<String> namespaces, Provider<String> outputPath) {
         NeoForgeExtension neoExtension = project.getExtensions().getByType(NeoForgeExtension.class);

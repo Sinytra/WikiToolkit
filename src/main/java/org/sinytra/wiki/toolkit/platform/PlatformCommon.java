@@ -7,6 +7,7 @@ import org.sinytra.wiki.toolkit.WikiUtils;
 
 public abstract class PlatformCommon {
     public static final String MOD_DEV_GRADLE_ID = "net.neoforged.moddev";
+    public static final String NEO_GRADLE_ID = "net.neoforged.gradle.userdev";
     public static final String FABRIC_LOOM_GRADLE_ID = "fabric-loom";
 
     protected abstract void createRunModel(Project project, String name, Provider<String> namespaces, Provider<String> outputPath);
