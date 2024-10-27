@@ -23,6 +23,12 @@ public abstract class WikiToolkitPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project target) {
+        if (!target.getGradle().getPlugins().hasPlugin(WikiToolkitRepositoriesPlugin.class)) {
+            target.getPlugins().apply(WikiToolkitRepositoriesPlugin.class);
+        } else {
+            target.getLogger().debug("Skipping application of Wiki Toolkit repositories plugin as it was applied at the settings level");
+        }
+
         WikiToolkitExtension extension = target.getExtensions().create("wiki", WikiToolkitExtension.class);
 
         extension.getWikiRepositoryUrl().convention(REPO_URL);

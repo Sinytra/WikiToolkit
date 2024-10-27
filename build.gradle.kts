@@ -47,7 +47,15 @@ gradlePlugin {
     plugins {
         create("wikiToolkitPlugin") {
             id = "org.sinytra.wiki.toolkit"
+            displayName = "Sinytra Wiki Toolkit"
+            description = "Developer toolkit for the Modded Minecraft Wiki"
             implementationClass = "org.sinytra.wiki.toolkit.WikiToolkitPlugin"
+        }
+        create("wikiToolkitRepositoriesPlugin") {
+            id = "org.sinytra.wiki.toolkit.repositories"
+            displayName = "Sinytra Wiki Toolkit Repositories"
+            description = "Configures bundled repositories for the Wiki Toolkit"
+            implementationClass = "org.sinytra.wiki.toolkit.WikiToolkitRepositoriesPlugin"
         }
     }
 }
