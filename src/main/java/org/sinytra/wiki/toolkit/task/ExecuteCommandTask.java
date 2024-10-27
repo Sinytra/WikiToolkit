@@ -6,7 +6,6 @@ import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.MapProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.internal.os.OperatingSystem;
@@ -27,7 +26,7 @@ public abstract class ExecuteCommandTask extends DefaultTask {
     @Internal
     public abstract Property<ProcessExecutorService> getExecService();
 
-    @InputDirectory
+    @Internal
     public abstract RegularFileProperty getWorkingDir();
 
     @Input
