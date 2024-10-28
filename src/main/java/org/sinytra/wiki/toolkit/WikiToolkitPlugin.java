@@ -36,6 +36,7 @@ public abstract class WikiToolkitPlugin implements Plugin<Project> {
         target.getPluginManager().withPlugin(PlatformCommon.MOD_DEV_GRADLE_ID, p -> new WikiToolkitModDevGradle().apply(target));
         target.getPluginManager().withPlugin(PlatformCommon.NEO_GRADLE_ID, p -> new WikiToolkitNeoGradle().apply(target));
         target.getPluginManager().withPlugin(PlatformCommon.FABRIC_LOOM_GRADLE_ID, p -> new WikiToolkitFabricLoom().apply(target));
+        target.getPluginManager().withPlugin(PlatformCommon.ARCH_LOOM_GRADLE_ID, p -> new WikiToolkitFabricLoom().apply(target));
 
         Provider<ProcessExecutorService> serviceProvider = target.getGradle().getSharedServices().registerIfAbsent(ProcessExecutorService.NAME, ProcessExecutorService.class);
 
