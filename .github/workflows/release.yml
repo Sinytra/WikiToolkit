@@ -20,7 +20,7 @@ jobs:
       gradle_tasks: publish publishPlugins
     secrets:
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-      MAVEN_USER: ${{ secrets.MAVEN_USER }}
+      MAVEN_USER: ${{ secrets.MAVEN_USERNAME }}
       MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
       GPP_KEY: ${{ secrets.GPP_KEY }}
       GPP_SECRET: ${{ secrets.GPP_SECRET }}
