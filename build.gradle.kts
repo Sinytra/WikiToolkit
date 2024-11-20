@@ -2,10 +2,11 @@ plugins {
     java
     `java-gradle-plugin`
     `maven-publish`
+    id("com.gradle.plugin-publish") version "1.3.0"
     id("net.neoforged.gradleutils") version "3.0.0"
 }
 
-group = "org.sinytra.wiki"
+group = "org.moddedmc.wiki"
 
 gradleutils.version {
     branches.suffixBranch()
@@ -14,6 +15,13 @@ project.version = gradleutils.version
 logger.lifecycle("Wiki Toolkit version ${gradleutils.version}")
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+
+if (System.getenv("GPP_KEY") != null) {
+    project.ext {
+        set("gradle.publish.key", System.getenv("GPP_KEY"))
+        set("gradle.publish.secret", System.getenv("GPP_SECRET"))
+    }
+}
 
 repositories {
     mavenCentral()
@@ -45,29 +53,33 @@ tasks.test {
 }
 
 gradlePlugin {
+    website.set("https://github.com/sinytra/wikitoolkit")
+    vcsUrl.set("https://github.com/sinytra/wikitoolkit")
     plugins {
         create("wikiToolkitPlugin") {
-            id = "org.sinytra.wiki.toolkit"
-            displayName = "Sinytra Wiki Toolkit"
+            id = "org.moddedmc.wiki.toolkit"
+            displayName = "ModdedMC Wiki Toolkit"
             description = "Developer toolkit for the Modded Minecraft Wiki"
-            implementationClass = "org.sinytra.wiki.toolkit.WikiToolkitPlugin"
+            implementationClass = "org.moddedmc.wiki.toolkit.WikiToolkitPlugin"
+            tags.set(listOf("minecraft", "wiki"))
         }
         create("wikiToolkitRepositoriesPlugin") {
-            id = "org.sinytra.wiki.toolkit.repositories"
-            displayName = "Sinytra Wiki Toolkit Repositories"
+            id = "org.moddedmc.wiki.toolkit.repositories"
+            displayName = "ModdedMC Wiki Toolkit Repositories"
             description = "Configures bundled repositories for the Wiki Toolkit"
-            implementationClass = "org.sinytra.wiki.toolkit.WikiToolkitRepositoriesPlugin"
+            implementationClass = "org.moddedmc.wiki.toolkit.WikiToolkitRepositoriesPlugin"
+            tags.set(listOf("minecraft", "wiki"))
         }
     }
 }
 
 publishing {
     repositories {
-        if (System.getenv("MAVEN_URL") != null) {
+        if (System.getenv("MAVEN_USER") != null) {
             maven {
-                url = uri(System.getenv("MAVEN_URL"))
+                url = uri(System.getenv("MAVEN_URL") ?: "https://maven.sinytra.org/releases")
                 credentials {
-                    username = System.getenv("MAVEN_USERNAME") ?: "not"
+                    username = System.getenv("MAVEN_USER") ?: "not"
                     password = System.getenv("MAVEN_PASSWORD") ?: "set"
                 }
             }

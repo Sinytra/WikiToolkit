@@ -1,4 +1,4 @@
-package org.sinytra.wiki.toolkit;
+package org.moddedmc.wiki.toolkit;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;

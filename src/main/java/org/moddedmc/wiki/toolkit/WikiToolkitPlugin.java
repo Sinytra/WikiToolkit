@@ -1,15 +1,19 @@
-package org.sinytra.wiki.toolkit;
+package org.moddedmc.wiki.toolkit;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.TaskProvider;
-import org.sinytra.wiki.toolkit.platform.PlatformCommon;
-import org.sinytra.wiki.toolkit.platform.WikiToolkitFabricLoom;
-import org.sinytra.wiki.toolkit.platform.WikiToolkitModDevGradle;
-import org.sinytra.wiki.toolkit.platform.WikiToolkitNeoGradle;
-import org.sinytra.wiki.toolkit.task.*;
+import org.moddedmc.wiki.toolkit.platform.PlatformCommon;
+import org.moddedmc.wiki.toolkit.platform.WikiToolkitFabricLoom;
+import org.moddedmc.wiki.toolkit.platform.WikiToolkitModDevGradle;
+import org.moddedmc.wiki.toolkit.platform.WikiToolkitNeoGradle;
+import org.moddedmc.wiki.toolkit.task.InstallDependenciesTask;
+import org.moddedmc.wiki.toolkit.task.ProcessExecutorService;
+import org.moddedmc.wiki.toolkit.task.RevalidateDocsTask;
+import org.moddedmc.wiki.toolkit.task.RunLocalWikiInstanceTask;
+import org.moddedmc.wiki.toolkit.task.SetupLocalWikiInstanceTask;
 
 import java.io.File;
 import java.net.URI;

@@ -1,4 +1,4 @@
-package org.sinytra.wiki.toolkit.platform;
+package org.moddedmc.wiki.toolkit.platform;
 
 import net.fabricmc.loom.api.LoomGradleExtensionAPI;
 import net.fabricmc.loom.configuration.ide.RunConfigSettings;
@@ -6,8 +6,8 @@ import org.gradle.api.NamedDomainObjectProvider;
 import org.gradle.api.Project;
 import org.gradle.api.provider.Provider;
 
-import static org.sinytra.wiki.toolkit.WikiToolkitPlugin.OUTPUT_PROPERTY;
-import static org.sinytra.wiki.toolkit.WikiToolkitPlugin.RENDER_PROPERTY;
+import static org.moddedmc.wiki.toolkit.WikiToolkitPlugin.OUTPUT_PROPERTY;
+import static org.moddedmc.wiki.toolkit.WikiToolkitPlugin.RENDER_PROPERTY;
 
 public class WikiToolkitFabricLoom extends PlatformCommon {
 

@@ -1,10 +1,10 @@
-package org.sinytra.wiki.toolkit;
+package org.moddedmc.wiki.toolkit;
 
 import org.gradle.api.Action;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Project;
 import org.gradle.api.provider.Property;
-import org.sinytra.wiki.toolkit.docs.DocumentationRoot;
+import org.moddedmc.wiki.toolkit.docs.DocumentationRoot;
 
 import javax.inject.Inject;
 

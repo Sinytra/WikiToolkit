@@ -16,7 +16,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package org.sinytra.wiki.toolkit;
+package org.moddedmc.wiki.toolkit;
 
 import org.gradle.api.Named;
 import org.jetbrains.annotations.Nullable;

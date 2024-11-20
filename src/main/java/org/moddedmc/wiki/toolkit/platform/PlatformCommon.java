@@ -1,9 +1,9 @@
-package org.sinytra.wiki.toolkit.platform;
+package org.moddedmc.wiki.toolkit.platform;
 
 import org.gradle.api.Project;
 import org.gradle.api.provider.Provider;
-import org.sinytra.wiki.toolkit.WikiToolkitExtension;
-import org.sinytra.wiki.toolkit.WikiUtils;
+import org.moddedmc.wiki.toolkit.WikiToolkitExtension;
+import org.moddedmc.wiki.toolkit.WikiUtils;
 
 public abstract class PlatformCommon {
     public static final String MOD_DEV_GRADLE_ID = "net.neoforged.moddev";

@@ -1,4 +1,4 @@
-package org.sinytra.wiki.toolkit.task;
+package org.moddedmc.wiki.toolkit.task;
 
 import org.gradle.work.DisableCachingByDefault;
 

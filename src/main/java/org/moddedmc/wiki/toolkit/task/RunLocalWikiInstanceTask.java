@@ -1,10 +1,10 @@
-package org.sinytra.wiki.toolkit.task;
+package org.moddedmc.wiki.toolkit.task;
 
 import org.gradle.internal.os.OperatingSystem;
 import org.gradle.api.provider.SetProperty;
 import org.gradle.api.tasks.Input;
 import org.gradle.work.DisableCachingByDefault;
-import org.sinytra.wiki.toolkit.docs.DocumentationRoot;
+import org.moddedmc.wiki.toolkit.docs.DocumentationRoot;
 
 import java.util.Map;
 import java.util.stream.Collectors;

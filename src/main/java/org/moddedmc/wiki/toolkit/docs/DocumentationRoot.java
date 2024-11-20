@@ -1,4 +1,4 @@
-package org.sinytra.wiki.toolkit.docs;
+package org.moddedmc.wiki.toolkit.docs;
 
 import org.gradle.api.Named;
 import org.gradle.api.file.RegularFileProperty;

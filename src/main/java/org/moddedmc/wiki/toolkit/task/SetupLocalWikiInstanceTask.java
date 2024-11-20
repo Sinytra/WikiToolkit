@@ -1,4 +1,4 @@
-package org.sinytra.wiki.toolkit.task;
+package org.moddedmc.wiki.toolkit.task;
 
 import org.eclipse.jgit.api.Git;
 import org.gradle.api.DefaultTask;
