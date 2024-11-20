@@ -77,7 +77,7 @@ publishing {
     repositories {
         if (System.getenv("MAVEN_USER") != null) {
             maven {
-                url = uri(System.getenv("MAVEN_URL") ?: "https://maven.sinytra.org/releases")
+                url = uri(System.getenv("MAVEN_URL") ?: "https://maven.su5ed.dev/releases/")
                 credentials {
                     username = System.getenv("MAVEN_USER") ?: "not"
                     password = System.getenv("MAVEN_PASSWORD") ?: "set"
