@@ -10,25 +10,13 @@ Highlighted features:
 
 ## Installation
 
-First, add our maven repository to your `settings.gradle` file.
+The wiki toolkit plugin is available on the [Gradle Plugin Portal](https://plugins.gradle.org/plugin/org.moddedmc.wiki.toolkit).
 
-```groovy
-pluginManagement {
-    repositories {
-        maven {
-            name = 'Sinytra'
-            url = 'https://maven.sinytra.org/'
-        }
-    }
-}
-```
-
-You can the install the plugin in your project. Add the following to your `build.gradle`.
+You can install it in your project by adding the following code to your `build.gradle`.
 
 ```groovy
 plugins {
-    // A list of available versions can be found at https://maven.sinytra.org/org/sinytra/wiki/wiki-toolkit
-    id 'org.sinytra.wiki.toolkit' version '<version>'
+    id 'org.moddedmc.wiki.toolkit' version '<version>'
 }
 ```
 
