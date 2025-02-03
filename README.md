@@ -12,13 +12,22 @@ Highlighted features:
 
 The wiki toolkit plugin is available on the [Gradle Plugin Portal](https://plugins.gradle.org/plugin/org.moddedmc.wiki.toolkit).
 
-You can install it in your project by adding the following code to your `build.gradle`.
+You can install it in your project by adding the following code to your `build.gradle` or `build.gradle.kts`.
 
+`build.gradle`
 ```groovy
 plugins {
     id 'org.moddedmc.wiki.toolkit' version '<version>'
 }
 ```
+
+`build.gradle.kts`
+```kts
+plugins {
+    id("org.moddedmc.wiki.toolkit") version "<version>"
+}
+```
+
 
 ## Setup
 
@@ -26,6 +35,7 @@ The initial step for using this plugin is registering documentation roots, which
 
 A minimal setup may look like this:
 
+`build.gradle`
 ```groovy
 wiki {
     docs {
@@ -34,6 +44,17 @@ wiki {
             // The path to the folder containing the documentation metadata file (sinytra-wiki.json)
             root = file('docs/examplemod')
         }
+    }
+}
+```
+
+`build.gradle.kts`
+```kts
+wiki {
+    // The name of the object (examplemod) should match the registered wiki project ID (if it exists).
+    docs.create("examplemod") {
+        // The path to the folder containing the documentation metadata file (sinytra-wiki.json)
+        root = file("docs/examplemod")
     }
 }
 ```
@@ -89,7 +110,8 @@ There's no need to worry about it being present in all game runs, as it does not
 nor does it affect the game. The exporter code only activates on designated run configurations.
 
 ```groovy
-// Adding a repository is not necessary; it is automatically installed by the plugin
+// Adding a repository is not necessary; it is automatically installed by the plugin.
+// However, if you are using a multiloader setup like Architectury Loom, you will need to install the plugin on your subprojects as well.
 dependencies {
     // ModDevGradle
     // Version list: https://maven.sinytra.org/org/sinytra/item-asset-export-neoforge
@@ -131,7 +153,7 @@ Once the token is generated, add it to your gradle configuration under the `wiki
 
 ```groovy
 wiki {
-    wikiAccessToken = 'MY_ACCESS_TOKEN' // Starts with github_pat_
+    wikiAccessToken = "MY_ACCESS_TOKEN" // Starts with github_pat_
 }
 ```
 
