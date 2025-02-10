@@ -18,7 +18,9 @@ public abstract class RunLocalWikiInstanceTask extends ExecuteCommandTask {
     public abstract SetProperty<DocumentationRoot> getDocumentationRoots();
 
     public RunLocalWikiInstanceTask() {
-        if (OperatingSystem.current() != OperatingSystem.WINDOWS) {
+        if (OperatingSystem.current().isLinux()) {
+            getCommand().addAll("bash", "-ci", "npm run dev");
+        } else if (OperatingSystem.current().isMacOsX()) {
             getCommand().addAll("bash", "-c", "npm run dev");
         } else {
             getCommand().addAll("npm", "run", "dev");
