@@ -114,6 +114,23 @@ nor does it affect the game. The exporter code only activates on designated run 
 // However, if you are using a multiloader setup like Architectury Loom, you will need to install the plugin on your subprojects as well.
 dependencies {
     // ModDevGradle
+    // Version list: https://maven.sinytra.org/org/sinytra/wiki-exporter-neoforge
+    runtimeOnly "org.sinytra:wiki-exporter-neoforge:<version>"
+
+    // Fabric Loom
+    // Version list: https://maven.sinytra.org/org/sinytra/wiki-exporter-fabric
+    modRuntimeOnly "org.sinytra:wiki-exporter-fabric:<version>"
+}
+```
+
+<details>
+<summary>See instructions for 1.21.4 and below</summary>
+
+```groovy
+// Adding a repository is not necessary; it is automatically installed by the plugin.
+// However, if you are using a multiloader setup like Architectury Loom, you will need to install the plugin on your subprojects as well.
+dependencies {
+    // ModDevGradle
     // Version list: https://maven.sinytra.org/org/sinytra/item-asset-export-neoforge
     runtimeOnly "org.sinytra:item-asset-export-neoforge:<version>"
 
@@ -122,6 +139,8 @@ dependencies {
     modRuntimeOnly "org.sinytra:item-asset-export-fabric:<version>"
 }
 ```
+
+</details>
 
 ### Running the export
 
@@ -142,18 +161,12 @@ To force all of your documentation pages to re-render the next time they're visi
 
 ### Generating a token
 
-Before you run the task, generate a GitHub [fine-grained access token](https://github.com/settings/personal-access-tokens/new)
-with the following permissions:
-
-- Repository permissions > Metadata = Read-only
-
-Additionally, make sure the token can access the wiki project's GitHub repository.
-
-Once the token is generated, add it to your gradle configuration under the `wiki` block.
+Before you run the task, generate a GitHub [Personal access token (classic)](https://github.com/settings/tokens/new)
+with no permissions. Copy the generated token and add it to your gradle configuration under the `wiki` block.
 
 ```groovy
 wiki {
-    wikiAccessToken = "MY_ACCESS_TOKEN" // Starts with github_pat_
+    wikiAccessToken = "MY_ACCESS_TOKEN" // Starts with ghp_
 }
 ```
 
