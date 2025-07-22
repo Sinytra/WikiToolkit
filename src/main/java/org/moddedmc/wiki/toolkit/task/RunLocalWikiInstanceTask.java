@@ -19,11 +19,11 @@ public abstract class RunLocalWikiInstanceTask extends ExecuteCommandTask {
 
     public RunLocalWikiInstanceTask() {
         if (OperatingSystem.current().isLinux()) {
-            getCommand().addAll("bash", "-ci", "npm run dev");
+            getCommand().addAll("bash", "-ci", "pnpm run dev");
         } else if (OperatingSystem.current().isMacOsX()) {
-            getCommand().addAll("bash", "-c", "npm run dev");
+            getCommand().addAll("bash", "-c", "pnpm run dev");
         } else {
-            getCommand().addAll("npm", "run", "dev");
+            getCommand().addAll("pnpm", "run", "dev");
         }
         getEnvironment().put(LOCAL_PREVIEW_ENV, "true");
     }

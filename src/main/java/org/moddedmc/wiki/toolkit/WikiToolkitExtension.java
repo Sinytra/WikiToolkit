@@ -5,18 +5,27 @@ import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Project;
 import org.gradle.api.provider.Property;
 import org.moddedmc.wiki.toolkit.docs.DocumentationRoot;
+import org.moddedmc.wiki.toolkit.dsl.Origin;
 
 import javax.inject.Inject;
 
 public abstract class WikiToolkitExtension {
     private final NamedDomainObjectContainer<DocumentationRoot> docs;
+    private final Origin origin;
 
     @Inject
     public WikiToolkitExtension(Project project) {
         this.docs = project.container(DocumentationRoot.class);
+        this.origin = project.getObjects().newInstance(Origin.class);
     }
 
-    public abstract Property<String> getWikiRepositoryUrl();
+    public Origin getOrigin() {
+        return this.origin;
+    }
+
+    public void origin(Action<Origin> action) {
+        action.execute(this.origin);
+    }
 
     public abstract Property<String> getWikiAccessToken();
 

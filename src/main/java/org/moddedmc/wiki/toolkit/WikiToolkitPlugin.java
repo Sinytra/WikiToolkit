@@ -9,11 +9,7 @@ import org.moddedmc.wiki.toolkit.platform.PlatformCommon;
 import org.moddedmc.wiki.toolkit.platform.WikiToolkitFabricLoom;
 import org.moddedmc.wiki.toolkit.platform.WikiToolkitModDevGradle;
 import org.moddedmc.wiki.toolkit.platform.WikiToolkitNeoGradle;
-import org.moddedmc.wiki.toolkit.task.InstallDependenciesTask;
-import org.moddedmc.wiki.toolkit.task.ProcessExecutorService;
-import org.moddedmc.wiki.toolkit.task.RevalidateDocsTask;
-import org.moddedmc.wiki.toolkit.task.RunLocalWikiInstanceTask;
-import org.moddedmc.wiki.toolkit.task.SetupLocalWikiInstanceTask;
+import org.moddedmc.wiki.toolkit.task.*;
 
 import java.io.File;
 import java.net.URI;
@@ -36,7 +32,7 @@ public abstract class WikiToolkitPlugin implements Plugin<Project> {
 
         WikiToolkitExtension extension = target.getExtensions().create("wiki", WikiToolkitExtension.class);
 
-        extension.getWikiRepositoryUrl().convention(REPO_URL);
+        extension.origin(origin -> origin.getRepositoryUrl().convention(REPO_URL));
         target.getPluginManager().withPlugin(PlatformCommon.MOD_DEV_GRADLE_ID, p -> new WikiToolkitModDevGradle().apply(target));
         target.getPluginManager().withPlugin(PlatformCommon.NEO_GRADLE_ID, p -> new WikiToolkitNeoGradle().apply(target));
         target.getPluginManager().withPlugin(PlatformCommon.FABRIC_LOOM_GRADLE_ID, p -> new WikiToolkitFabricLoom().apply(target));
@@ -48,9 +44,10 @@ public abstract class WikiToolkitPlugin implements Plugin<Project> {
         target.getTasks().register("setupDocsPreview", SetupLocalWikiInstanceTask.class, t -> {
             t.setDescription("Setup local Wiki instance");
             t.getWorkDir().set(workDir);
-            t.getRepositoryUrl().set(extension.getWikiRepositoryUrl());
+            t.getOrigin().set(extension.getOrigin());
         });
 
+        // TODO Check if pnpm is installed
         TaskProvider<InstallDependenciesTask> installDepsTask = target.getTasks().register("installDocsDependencies", InstallDependenciesTask.class, t -> {
             t.usesService(serviceProvider);
             t.getExecService().convention(serviceProvider);

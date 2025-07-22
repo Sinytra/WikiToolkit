@@ -7,11 +7,11 @@ import org.gradle.work.DisableCachingByDefault;
 public abstract class InstallDependenciesTask extends ExecuteCommandTask {
     public InstallDependenciesTask() {
         if (OperatingSystem.current().isLinux()) {
-            getCommand().addAll("bash", "-ci", "npm install");
+            getCommand().addAll("bash", "-ci", "pnpm install");
         } else if (OperatingSystem.current().isMacOsX()) {
-            getCommand().addAll("bash", "-c", "npm install");
+            getCommand().addAll("bash", "-c", "pnpm install");
         } else {
-            getCommand().addAll("npm", "install");
+            getCommand().addAll("pnpm", "install");
         }
     }
 }

@@ -8,6 +8,7 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.work.DisableCachingByDefault;
+import org.moddedmc.wiki.toolkit.dsl.Origin;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,7 +21,7 @@ public abstract class SetupLocalWikiInstanceTask extends DefaultTask {
     }
 
     @Input
-    public abstract Property<String> getRepositoryUrl();
+    public abstract Property<Origin> getOrigin();
 
     @OutputDirectory
     public abstract RegularFileProperty getWorkDir();
@@ -58,10 +59,12 @@ public abstract class SetupLocalWikiInstanceTask extends DefaultTask {
     private void setupRepository(Path workDir) throws Exception {
         getLogger().lifecycle("Setting up local Wiki instance...");
 
+        Origin origin = getOrigin().get();
         // Auto-close git after cloning
         //noinspection EmptyTryBlock
         try (Git git = Git.cloneRepository()
-            .setURI(getRepositoryUrl().get())
+            .setURI(origin.getRepositoryUrl().get())
+            .setBranch(origin.getBranch().getOrElse(null))
             .setDepth(1)
             .setDirectory(workDir.toFile())
             .call()
