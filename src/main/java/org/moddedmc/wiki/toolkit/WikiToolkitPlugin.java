@@ -16,9 +16,6 @@ import java.net.URI;
 
 @SuppressWarnings("unused")
 public abstract class WikiToolkitPlugin implements Plugin<Project> {
-    public static final String RENDER_PROPERTY = "item_asset_export.render.namespaces";
-    public static final String OUTPUT_PROPERTY = "item_asset_export.render.output";
-
     public static final String REPO_URL = "https://github.com/Sinytra/Wiki";
     public static final String DEFAULT_WIKI_URL = "https://moddedmc.wiki";
 

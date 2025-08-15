@@ -1,31 +1,18 @@
 package org.moddedmc.wiki.toolkit.platform;
 
 import net.neoforged.moddevgradle.dsl.NeoForgeExtension;
-import net.neoforged.moddevgradle.dsl.RunModel;
-import org.gradle.api.NamedDomainObjectProvider;
 import org.gradle.api.Project;
-import org.gradle.api.provider.Provider;
-
-import static org.moddedmc.wiki.toolkit.WikiToolkitPlugin.OUTPUT_PROPERTY;
-import static org.moddedmc.wiki.toolkit.WikiToolkitPlugin.RENDER_PROPERTY;
+import org.moddedmc.wiki.toolkit.docs.DocumentationRoot;
 
 public class WikiToolkitModDevGradle extends PlatformCommon {
     @Override
-    protected void createRunModel(Project project, String name, Provider<String> namespaces, Provider<String> outputPath) {
+    protected void configureExporter(Project project, DocumentationRoot root) {
         NeoForgeExtension neoExtension = project.getExtensions().getByType(NeoForgeExtension.class);
 
-        NamedDomainObjectProvider<RunModel> model = neoExtension.getRuns().register(name, run -> {
-            run.client();
-            RunModel clientRun = neoExtension.getRuns().findByName("client");
-            if (clientRun != null) {
-                run.getGameDirectory().set(clientRun.getGameDirectory());
+        neoExtension.getRuns().configureEach(r -> {
+            if ("true".equals(r.getSystemProperties().get().get(EXPORTER_ENABLED))) {
+                r.getSystemProperties().putAll(getSystemProps(root));
             }
-
         });
-
-        project.afterEvaluate(p -> model.configure(run -> {
-            run.systemProperty(RENDER_PROPERTY, namespaces.get());
-            run.systemProperty(OUTPUT_PROPERTY, outputPath.get());
-        }));
     }
 }

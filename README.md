@@ -77,79 +77,25 @@ Using `org.gradle.daemon=false` will prevent the npm task from existing when gra
 in the background. Please check your `gradle.properties` file and make sure this property is either set to `true` or
 removed entirely.
 
-## Exporting assets
+## Exporting assets and game data
 
 > [!NOTE]  
-> Exporting assets is only supported when using [ModDevGradle](https://github.com/neoforged/ModDevGradle) (NeoForge) or [Fabric Loom](https://github.com/FabricMC/fabric-loom) (Fabric)
+> Exporting assets is only supported when using [ModDevGradle](https://github.com/neoforged/ModDevGradle) (NeoForge) or
+> [Fabric Loom](https://github.com/FabricMC/fabric-loom) (Fabric)
 
-This feature lets you automatically render and export images of in-game items the way they are displayed
-in one's inventory, saving you time preparing documentation assets.
+Our data export mod automatically renders and exports images of in-game items for you the way they are displayed
+in one's inventory.
 
-The resulting files are placed in the appropriate subfolder inside your documentation root, **ready to be referenced**
-in docs with no additional configuration necessary.
+When combined with this plugin, resulting files are placed in the appropriate subfolder inside your documentation root,
+**ready to be referenced** in docs with no additional configuration necessary.
 
-### Prerequisites
+### Usage
 
-Before running an export, make sure you have configured the `exportedAssetNamespaces` property of your
-documentation root(s).
+Install and configure the exporter as described in its [repository](https://github.com/Sinytra/WikiDataExporter).
 
-```groovy
-wiki {
-    docs {
-        examplemod {
-            // Namespaces of registered in-game item IDs that you wish to include in the asset export
-            // for this documentation root.
-            exportedAssetNamespaces = ['examplemod']
-        }
-    }
-}
-```
+You don't need to set the output path - we'll do that for you automatically.
 
-Next, install our [Item Asset Exporter](https://github.com/Sinytra/ItemAssetExporterMod) mod.
-There's no need to worry about it being present in all game runs, as it does not do anything by default
-nor does it affect the game. The exporter code only activates on designated run configurations.
-
-```groovy
-// Adding a repository is not necessary; it is automatically installed by the plugin.
-// However, if you are using a multiloader setup like Architectury Loom, you will need to install the plugin on your subprojects as well.
-dependencies {
-    // ModDevGradle
-    // Version list: https://maven.sinytra.org/org/sinytra/wiki-exporter-neoforge
-    runtimeOnly "org.sinytra:wiki-exporter-neoforge:<version>"
-
-    // Fabric Loom
-    // Version list: https://maven.sinytra.org/org/sinytra/wiki-exporter-fabric
-    modRuntimeOnly "org.sinytra:wiki-exporter-fabric:<version>"
-}
-```
-
-<details>
-<summary>See instructions for 1.21.4 and below</summary>
-
-```groovy
-// Adding a repository is not necessary; it is automatically installed by the plugin.
-// However, if you are using a multiloader setup like Architectury Loom, you will need to install the plugin on your subprojects as well.
-dependencies {
-    // ModDevGradle
-    // Version list: https://maven.sinytra.org/org/sinytra/item-asset-export-neoforge
-    runtimeOnly "org.sinytra:item-asset-export-neoforge:<version>"
-
-    // Fabric Loom
-    // Version list: https://maven.sinytra.org/org/sinytra/item-asset-export-fabric
-    modRuntimeOnly "org.sinytra:item-asset-export-fabric:<version>"
-}
-```
-
-</details>
-
-### Running the export
-
-Export tasks are created for each documentation root as automated client game runs. They will launch a game client that
-once initialized, exports the renders of all matching items and exists the game. **Please do not interact with the client
-during this run.** If the game reaches the main menu, please open a bug report on this repository.
-
-To run an export for a documentation root, use the `runExport<name>Assets`, where `<name>` is the
-root's capitalized name, e.g. `runExportExamplemodAssets`.
+To run the export, launch the appropriate game run(s) where the exporter is enabled.
 
 ## Publishing documentation
 
