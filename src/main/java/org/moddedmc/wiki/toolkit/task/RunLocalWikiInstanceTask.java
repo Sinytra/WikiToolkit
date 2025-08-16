@@ -13,17 +13,18 @@ import java.util.stream.Collectors;
 public abstract class RunLocalWikiInstanceTask extends ExecuteCommandTask {
     public static final String LOCAL_PREVIEW_ENV = "ENABLE_LOCAL_PREVIEW";
     public static final String LOCAL_DOCS_ROOTS = "LOCAL_DOCS_ROOTS";
+    public static final String PREVIEW_TASK = "preview";
 
     @Input
     public abstract SetProperty<DocumentationRoot> getDocumentationRoots();
 
     public RunLocalWikiInstanceTask() {
         if (OperatingSystem.current().isLinux()) {
-            getCommand().addAll("bash", "-ci", "pnpm run dev");
+            getCommand().addAll("bash", "-ci", "pnpm run " + PREVIEW_TASK);
         } else if (OperatingSystem.current().isMacOsX()) {
-            getCommand().addAll("bash", "-c", "pnpm run dev");
+            getCommand().addAll("bash", "-c", "pnpm run " + PREVIEW_TASK);
         } else {
-            getCommand().addAll("pnpm", "run", "dev");
+            getCommand().addAll("pnpm", "run", PREVIEW_TASK);
         }
         getEnvironment().put(LOCAL_PREVIEW_ENV, "true");
     }
