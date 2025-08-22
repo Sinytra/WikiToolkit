@@ -22,7 +22,7 @@ public abstract class PlatformCommon {
 
         project.afterEvaluate(p -> {
             if (extension.getDocs().size() == 1) {
-                extension.getDocs().configureEach(root -> {
+                extension.getDocs().all(root -> {
                     configureExporter(p, root);
                 });
             }
