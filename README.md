@@ -61,15 +61,20 @@ wiki {
 
 ## Real-time documentation preview
 
-The plugin allows you to preview your mod documentation in real-time on your local machine. Behind the scenes,
-this is done by cloning the Wiki's GitHub repository and enabling local preview mode.
+The plugin allows you to preview your mod documentation in real-time on your local machine.
 
-Running a local preview requires [NodeJS](https://nodejs.org/en/download/) and [pnpm](https://pnpm.io/installation).
+Running a local preview requires [NodeJS](https://nodejs.org/en/download/) and
+[npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 Please make sure you have NodeJS **v20 or above** installed on your computer.
 
 **To start the local preview, run the `previewDocs` task.** This will set up and launch the local wiki environment.
 
 Once ready, it will be available at `http://localhost:3000`.
+
+### Standalone preview
+
+You can also run the previewer separately from the plugin. See the
+[NPM package](https://www.npmjs.com/package/@sinytra/wiki-previewer) for more information.
 
 ### Known issues
 
