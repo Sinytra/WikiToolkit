@@ -12,6 +12,9 @@ import org.gradle.internal.os.OperatingSystem;
 import org.slf4j.Logger;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +45,11 @@ public abstract class ExecuteCommandTask extends DefaultTask {
     public void execute() throws Exception {
         Logger logger = getLogger();
         File workDir = getWorkingDir().get().getAsFile();
+        try {
+            Files.createDirectories(workDir.toPath());
+        } catch (IOException e) {
+            throw new UncheckedIOException("Failed to create working directory", e);
+        }
 
         boolean isWindows = OperatingSystem.current().isWindows();
         List<String> cmd = new ArrayList<>();
@@ -53,6 +61,8 @@ public abstract class ExecuteCommandTask extends DefaultTask {
         ProcessExecutorService execService = getExecService().get();
         Map<String, String> env = new HashMap<>(getEnvironment().get());
         modifyEnvironment(env);
+
+        logger.info("Executing command: {}", String.join(" ", cmd));
         Process process = execService.executeCommand(this, workDir, env, cmd, getSilentStdOut().get());
         process.waitFor();
 
@@ -63,5 +73,6 @@ public abstract class ExecuteCommandTask extends DefaultTask {
         }
     }
 
-    protected void modifyEnvironment(Map<String, String> env) {}
+    protected void modifyEnvironment(Map<String, String> env) {
+    }
 }

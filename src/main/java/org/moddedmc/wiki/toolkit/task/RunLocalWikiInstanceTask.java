@@ -11,22 +11,20 @@ import java.util.stream.Collectors;
 
 @DisableCachingByDefault
 public abstract class RunLocalWikiInstanceTask extends ExecuteCommandTask {
-    public static final String LOCAL_PREVIEW_ENV = "ENABLE_LOCAL_PREVIEW";
     public static final String LOCAL_DOCS_ROOTS = "LOCAL_DOCS_ROOTS";
-    public static final String PREVIEW_TASK = "preview";
+    public static final String PKG_NAME = "@sinytra/wiki-previewer@latest";
 
     @Input
     public abstract SetProperty<DocumentationRoot> getDocumentationRoots();
 
     public RunLocalWikiInstanceTask() {
         if (OperatingSystem.current().isLinux()) {
-            getCommand().addAll("bash", "-ci", "pnpm run " + PREVIEW_TASK);
+            getCommand().addAll("bash", "-ci", "npx -y " + PKG_NAME);
         } else if (OperatingSystem.current().isMacOsX()) {
-            getCommand().addAll("bash", "-c", "pnpm run " + PREVIEW_TASK);
+            getCommand().addAll("bash", "-c", "npx -y " + PKG_NAME);
         } else {
-            getCommand().addAll("pnpm", "run", PREVIEW_TASK);
+            getCommand().addAll("npx", "-y", PKG_NAME);
         }
-        getEnvironment().put(LOCAL_PREVIEW_ENV, "true");
     }
 
     @Override

@@ -37,37 +37,17 @@ public abstract class WikiToolkitPlugin implements Plugin<Project> {
 
         Provider<ProcessExecutorService> serviceProvider = target.getGradle().getSharedServices().registerIfAbsent(ProcessExecutorService.NAME, ProcessExecutorService.class);
 
-        File workDir = target.getLayout().getBuildDirectory().file("previewDocs").get().getAsFile();
-        target.getTasks().register("setupDocsPreview", SetupLocalWikiInstanceTask.class, t -> {
-            t.setDescription("Setup local Wiki instance");
-            t.getWorkDir().set(workDir);
-            t.getOrigin().set(extension.getOrigin());
-        });
+        File workDir = target.getLayout().getBuildDirectory().file("wiki-previewer").get().getAsFile();
 
-        // TODO Check if pnpm is installed
-        TaskProvider<InstallDependenciesTask> installDepsTask = target.getTasks().register("installDocsDependencies", InstallDependenciesTask.class, t -> {
-            t.usesService(serviceProvider);
-            t.getExecService().convention(serviceProvider);
-
-            t.doNotTrackState("NPM tracks the state");
-            t.getSilentStdOut().set(true);
-            t.getWorkingDir().set(workDir);
-
-            t.dependsOn("setupDocsPreview");
-        });
-
-        // TODO File watcher
         target.getTasks().register("previewDocs", RunLocalWikiInstanceTask.class, t -> {
             t.setGroup("documentation");
-            t.setDescription("Runs a local Wiki instance");
+            t.setDescription("Runs a local Wiki Previewer instance");
 
             t.usesService(serviceProvider);
             t.getExecService().convention(serviceProvider);
 
             t.getWorkingDir().set(workDir);
             t.getDocumentationRoots().convention(extension.getDocs());
-
-            t.dependsOn(installDepsTask);
         });
 
         Task revalidateDocsTask = target.getTasks().create("revalidateDocs", t -> {
